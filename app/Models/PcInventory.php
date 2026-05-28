@@ -10,7 +10,7 @@ class PcInventory extends Model
     /** @use HasFactory<\Database\Factories\PcInventoryFactory> */
     use HasFactory;
 
-    protected $table="pc_inventories";
+    protected $table="pc_inventory";
 
     protected $fillable = [
         'PC_Name',
