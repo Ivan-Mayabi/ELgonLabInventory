@@ -140,7 +140,7 @@
               cursor:not-allowed;
               display:block !important;
               transform-origin:center;
-              transform:scale(1.1);
+              transform:scale(1.0);
             }
 
             /* Make the item black when clicked */
@@ -157,8 +157,8 @@
             #zoom-container.zoomed #room-container{
               flex:1;
               max-height:100vh;
-              border:1px solid red;
-              display:flex;
+              /* border:1px solid red; */
+              /* display:flex; */
               align-items:center;
               justify-content:center;
               overflow:hidden;
@@ -167,7 +167,7 @@
             /* Make the things that are there to have a flex of 50, 50 */
             #zoom-container.zoomed #display-component{
               flex:1;
-              border:10px solid blue;
+              /* border:10px solid blue; */
             }
 
             /* Make the rows be visible */
@@ -178,15 +178,25 @@
 
           {{-- The layout --}}
           {{-- Back Button --}}
-          <button id="back-btn" class="btn btn-dark d-none mb-3" onclick="resetView()">
-            <i class="bi bi-arrow-left d-inline m-2"></i>Back to room
-          </button>
+          <div x-data>
+            <button id="back-btn" class="btn btn-dark d-none mb-3" onclick="resetView()" @click="Livewire.dispatch('computerReset')">
+              <i class="bi bi-arrow-left d-inline m-2"></i>Back to room
+            </button>
+          </div>
 
-          {{-- Create new item --}}
+          {{-- Create new item/Update from csv --}}
           {{-- Button --}}
           <button id="create-btn" class="btn btn-dark mb-3" onclick="showForm()">
               Create New Computer
           </button>
+
+          {{-- Button to start the sending from form --}}
+          <form action="{{route("pcinventories.massCreate")}}" class="d-inline" method="POST">
+            @csrf
+            <button id="update-from-list-btn" class="btn btn-dark mb-3">
+                Load from Form
+            </button>
+          </form>
 
           {{-- Update New Item --}}
           <button id="update-btn" class="btn btn-dark d-none mb-3">
@@ -220,106 +230,7 @@
               <x-room-component/>
             </div>
 
-            <div id="display-component" class="d-none">
-              <p>Hardware Prescence</p>
-              <table style="border-collapse:collapse">
-                <tr>
-                  <th>Component</th>
-                  <th>Type/Prescence/Specification</th>
-                </tr>
-                <tr>
-                  <td>Mouse</td>
-                  <td>Present - HP</td>
-                </tr>
-                <tr>
-                  <td>Keyboard</td>
-                  <td>Present - Lenovo</td>
-                </tr>
-                <tr>
-                  <td>Monitor</td>
-                  <td>Present- HP</td>
-                </tr>
-                <tr>
-                  <td>System Unit</td>
-                  <td>Present - Lenovo</td>
-                </tr>
-                <tr>
-                  <td>HDMI Port</td>
-                  <td>Present</td>
-                </tr>
-              </table>
-              <p>Hardware Specifications</p>
-              <table>
-                <tr>
-                  <th>Component</th>
-                  <th>Specification</th>
-                </tr>
-                <tr>
-                  <td>PC ID</td>
-                  <td>001</td>
-                </tr>
-                <tr>
-                  <td>PC Name</td>
-                  <td>ELGON 03 </td>
-                </tr>
-                <tr>
-                  <td>Processor</td>
-                  <td>Core i5-10500 CPU (3.10GHz)</td>
-                </tr>
-                <tr>
-                  <td>OS</td>
-                  <td>Windows 11 Pro N</td>
-                </tr>
-                <tr>
-                  <td>Graphics Card</td>
-                  <td>No VRAM Detected</td>
-                </tr>
-                <tr>
-                  <td>RAM Installed</td>
-                  <td>8GB</td>
-                </tr>
-                <tr>
-                  <td>Storage</td>
-                  <td>477GB</td>
-                </tr>
-                <tr>
-                  <td>Student Domain Accessible</td>
-                  <td>No student account can get here </td>
-                </tr>
-                <tr>
-                  <td>Padlocked</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Processor Architecture</td>
-                  <td>X64</td>
-                </tr>
-                <tr>
-                  <td>Cable Ties</td>
-                  <td>Missing on Keyboard & Mouse</td>
-                </tr>
-                <tr>
-                  <td>WiFi PCIe Card</td>
-                  <td>Present</td>
-                </tr>
-                <tr>
-                  <td>Internet Access via</td>
-                  <td>Ethernet, WiFi</td>
-                </tr>
-                <tr>
-                  <td>RAM Speed</td>
-                  <td>2667MT/s</td>
-                </tr>
-                <tr>
-                  <td>OS installed</td>
-                  <td>09/06/2025</td>
-                </tr>
-                <tr>
-                  <td>CPU speed</td>
-                  <td>3.10GHz</td>
-                </tr>
-              </table>
-            </div>
+            <livewire:computer-details/>
           </div>
 
           {{-- The functionality --}}
@@ -332,7 +243,6 @@
                 const updateButton = document.getElementById('update-btn');
                 const flexContainer = document.getElementById('zoom-container');
                 const roomContainer = document.getElementById('room-container');
-                const displayArea = document.getElementById('display-component');
 
                 // Zoom functionality on each individual item on the SVG
                 appliances.forEach(item => {
@@ -342,8 +252,6 @@
 
                     // Make side by side, display the other Area
                     flexContainer.classList.add('zoomed');
-                    displayArea.classList.remove('d-none');
-
 
                     // Make sure nothing else is active
                     appliances.forEach(otherItem => {otherItem.classList.remove('active')});
@@ -376,8 +284,7 @@
               const createButton = document.getElementById('create-btn');
               const updateButton = document.getElementById('update-btn');
               const flexContainer = document.getElementById('zoom-container');
-              const roomContainer = document.getElementById('room-container');
-              const displayArea = document.getElementById('display-component');  
+              const roomContainer = document.getElementById('room-container'); 
 
               // Disable Back Button
               backButton.classList.add('d-none');
@@ -393,7 +300,7 @@
 
               // Return to normal svg functionality
               flexContainer.classList.remove('zoomed');
-              displayArea.classList.add('d-none');
+              
             }
 
           </script>

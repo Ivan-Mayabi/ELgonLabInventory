@@ -10,23 +10,34 @@ class PcInventory extends Model
     /** @use HasFactory<\Database\Factories\PcInventoryFactory> */
     use HasFactory;
 
-    protected $table="pc_inventories";
+    protected $table="pc_inventory";
 
     protected $fillable = [
-        'PC_Name',
+        'created_at',
+        'updated_at',
+        'RowColumn',
+        'Keyboard',
+        'Mouse',
+        'Monitor',
+        'MonitorBrand',
+        'HDMI', 
+        'Ethernet',
+        'CableTies',
+        'SystemUnit',
+        'CanAccessAdmin',
+        'SystemUnitBrand',
+        'DeviceName',
         'Processor',
-        'OS_Installed',
+        'ProcessorSpeed',
+        'RamInstalled',
+        'RamSpeed', 
+        'StorageUsable',
+        'WifiEnabled',
+        'OsInstalled',
+        'OsInstallationDate',
         'Graphics_Card',
-        'RAM_Installed',
-        'Storage',
-        'Student_Domain_Accessible',
+        'StudentDomainAccessible',
         'Padlocked',
-        'Processor_Architecture',
-        'Cable_Ties',
-        'WiFi_Card',
-        'Internet_Accessible',
-        'RAM_Speed',
-        'OS_Installation_Date',
-        'CPU_Speed',
+        'Errors',
     ];
 }
