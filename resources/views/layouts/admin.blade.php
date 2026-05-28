@@ -188,6 +188,14 @@
               Create New Computer
           </button>
 
+          {{-- Button to start the sending from form --}}
+          <form action="{{route("pcinventories.massCreate")}}" class="d-inline" method="POST">
+            @csrf
+            <button id="update-from-list-btn" class="btn btn-dark mb-3">
+                Load from Form
+            </button>
+          </form>
+
           {{-- Update New Item --}}
           <button id="update-btn" class="btn btn-dark d-none mb-3">
               Update New Computer

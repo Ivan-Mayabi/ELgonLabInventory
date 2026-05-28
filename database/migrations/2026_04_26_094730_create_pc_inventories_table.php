@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('Keyboard');
             $table->boolean('Mouse');
             $table->boolean('Monitor');
-            $table->string('MonitorBrand',10);
+            $table->string('MonitorBrand',20);
             $table->boolean('HDMI');
             $table->boolean('Ethernet');
             $table->boolean('CableTies');
