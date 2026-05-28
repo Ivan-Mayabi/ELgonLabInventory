@@ -140,7 +140,7 @@
               cursor:not-allowed;
               display:block !important;
               transform-origin:center;
-              transform:scale(1.1);
+              transform:scale(1.0);
             }
 
             /* Make the item black when clicked */
@@ -157,8 +157,8 @@
             #zoom-container.zoomed #room-container{
               flex:1;
               max-height:100vh;
-              border:1px solid red;
-              display:flex;
+              /* border:1px solid red; */
+              /* display:flex; */
               align-items:center;
               justify-content:center;
               overflow:hidden;
@@ -167,7 +167,7 @@
             /* Make the things that are there to have a flex of 50, 50 */
             #zoom-container.zoomed #display-component{
               flex:1;
-              border:10px solid blue;
+              /* border:10px solid blue; */
             }
 
             /* Make the rows be visible */
@@ -182,7 +182,7 @@
             <button id="back-btn" class="btn btn-dark d-none mb-3" onclick="resetView()" @click="Livewire.dispatch('computerReset')">
               <i class="bi bi-arrow-left d-inline m-2"></i>Back to room
             </button>
-        </div>
+          </div>
 
           {{-- Create new item/Update from csv --}}
           {{-- Button --}}
