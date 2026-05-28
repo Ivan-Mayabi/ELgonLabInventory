@@ -85,6 +85,9 @@ class PcInventoryController extends Controller
         $importedRows=0;
         $dataToInsert = [];
 
+        // Delete the rows from the table first
+        PcInventory::truncate();
+
         // Read until false
         while(($row = fgetcsv($handle,null,',')) !== FALSE){
             // Assignment
@@ -124,7 +127,7 @@ class PcInventoryController extends Controller
                 if(preg_match("/Present/",$Ethernet)){$Ethernet=1;}else{$Ethernet=0;}
                 if(preg_match("/Present/",$CableTies)){$CableTies=1;}else{$CableTies=0;}
                 if(preg_match("/Present/",$SystemUnit)){$SystemUnit=1;}else{$SystemUnit=0;}
-                if(preg_match("/Present/",$CanAccessAdmin)){$CanAccessAdmin=1;}else{$CanAccessAdmin=0;}
+                if(preg_match("/Yes/",$CanAccessAdmin)){$CanAccessAdmin=1;}else{$CanAccessAdmin=0;}
                 if(preg_match("/Yes/",$WifiEnabled)){$WifiEnabled=1;}else{$WifiEnabled=0;}
                 if(preg_match("/Yes/",$StudentDomainAccessible)){$StudentDomainAccessible=1;}else{$StudentDomainAccessible=0;}
                 if(preg_match("/Yes/",$Padlocked)){$Padlocked=1;}else{$Padlocked=0;}
