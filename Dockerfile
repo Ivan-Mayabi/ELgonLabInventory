@@ -3,7 +3,7 @@ FROM php:8.3-apache
 # Install dependencies
 RUN apt-get update && \
     apt-get install -y \
-        libzip-dev \
+        libzip-dev git unzip\
         zip
 
 #Enable mod_rewrite
@@ -37,3 +37,9 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Remove old cached files
 RUN php artisan view:clear
+
+# Copy entrypoint.sh into the container image and make it executable
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
