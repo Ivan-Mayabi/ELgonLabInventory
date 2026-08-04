@@ -19,9 +19,6 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Copy the application code
 COPY . /var/www/html
 
-# Remove old cached files
-RUN php artisan view:clear
-
 # Fix Laravel permissions for Apache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
@@ -37,3 +34,6 @@ RUN composer install
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Remove old cached files
+RUN php artisan view:clear
