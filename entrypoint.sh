@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Change the permissions of the necessary folders
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 777 storage bootstrap/cache
+
 # Wait for MySQL to connect
 sleep 5
 
