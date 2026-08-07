@@ -19,10 +19,6 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Copy the application code
 COPY . /var/www/html
 
-# Fix Laravel permissions for Apache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
 # Set the working directory
 WORKDIR /var/www/html
 
@@ -33,6 +29,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer install
 
 # Set permissions
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/views
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 777 storage bootstrap/cache
 
