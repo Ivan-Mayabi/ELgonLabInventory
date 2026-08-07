@@ -8,6 +8,11 @@ chmod -R 777 storage bootstrap/cache
 # Wait for MySQL to connect
 sleep 5
 
+# Clear the config and optimize
+php artisan config:clear
+php artisan view:clear
+php artisan optimize:clear
+
 # Run database migrations automatically
 php artisan migrate --force
 
